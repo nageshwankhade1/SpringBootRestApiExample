@@ -19,7 +19,7 @@ public class RestApiController {
 	public static final Logger logger = LoggerFactory.getLogger(RestApiController.class);
 
 
-	@RequestMapping(value = "/user/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add/", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@Valid @RequestBody Root root) {
 		logger.info("Creating Root : {}", root);
 
