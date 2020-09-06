@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api")
@@ -24,12 +25,25 @@ public class RestApiController {
 	@Autowired
 	Services services;
 
-	@RequestMapping(value = "/add/", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@Valid @RequestBody Root root) {
+	@RequestMapping(value = "/single/", method = RequestMethod.POST)
+	public ResponseEntity<?> readJsonObject(@Valid @RequestBody Root root) {
 		logger.info("JSON Object : {}", root);
 
 		BigDecimal addition = services.addition(new BigDecimal(root.getGlobal().getAddition().getFirstNum()),
 												new BigDecimal(root.getGlobal().getAddition().getSecondNum()));
+
+		return new ResponseEntity<>(addition.toString(), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/tuple/", method = RequestMethod.POST)
+	public ResponseEntity<?> readJsonTuple(@Valid @RequestBody Collection<Root> rootTuple) {
+		logger.info("JSON Object Array : {}", rootTuple);
+		BigDecimal addition = BigDecimal.ZERO ;
+		for(Root root: rootTuple){
+			//TODO write business logic
+			addition = addition.add(services.addition(new BigDecimal(root.getGlobal().getAddition().getFirstNum()),
+					new BigDecimal(root.getGlobal().getAddition().getSecondNum())));
+		}
 
 		return new ResponseEntity<>(addition.toString(), HttpStatus.OK);
 	}
