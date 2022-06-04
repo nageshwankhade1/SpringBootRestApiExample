@@ -1,5 +1,6 @@
 package com.nmw.springboot.controller;
 
+import com.nmw.springboot.config.BillerConfig;
 import com.nmw.springboot.model.Root;
 import com.nmw.springboot.service.Services;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +25,9 @@ public class RestApiController {
 
 	@Autowired
 	Services services;
+
+	@Autowired
+	BillerConfig billerConfig;
 
 	@RequestMapping(value = "/single/", method = RequestMethod.POST)
 	public ResponseEntity<?> readJsonObject(@Valid @RequestBody Root root) {
@@ -47,5 +51,18 @@ public class RestApiController {
 
 		return new ResponseEntity<>(addition.toString(), HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/config", method = RequestMethod.GET)
+	public ResponseEntity<?> readConfig() {
+		Map<Integer, String> map = new HashMap<>();
+		System.out.println(billerConfig.getDatasource());
+		List<Integer> list = Arrays.asList(11,22,33);
+		for(int i=1;i<list.size();i++){
+			map.put(list.get(i), billerConfig.getDatasource().get(i));
+		}
+		System.out.println(map);
+		return new ResponseEntity<>(map, HttpStatus.OK);
+	}
+
 
 }

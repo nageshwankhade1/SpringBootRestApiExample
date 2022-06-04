@@ -1,3 +1,9 @@
 server:
   port: 8080
   contextPath: /SpringBootRestApi
+
+data:
+  datasource:
+    1: CS1
+    2: CS2
+    3: CS3

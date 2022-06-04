@@ -15,6 +15,7 @@ public class ServiceImpl implements Services {
 
     @Override
     public BigDecimal subtraction() {
+        String s;
         return null;
     }
 
